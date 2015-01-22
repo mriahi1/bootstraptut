@@ -1,31 +1,25 @@
 module.exports = function (grunt) {
-  grunt.initConfig({
-    // Watch task config
-    watch: {
-    	options: {
-        	livereload: true
-      	},
-      	compass: {
-        	files: ['**/*.{scss,sass}'],
-        	tasks: ['compass:dev'],
-      	},
-    },
-    // compass task config
-    compass: {
-        dev: {
-            options: {
-            	sassDir:['scss'],
-            	cssDir:['css'],
-            	environment:'development'
-            }
-        }
-    },
-  });
-
-  grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-compass');
-
-  	// register a default task.
+  grunt.initConfig({
+    uglify: {
+      my_target: {
+        files: {
+          '_/js/script.js' : ['_/components/js/*.js']
+        }//files
+      }//my_target
+    },//uglify
+    watch: {
+      options: { livereload : true },
+      script: {
+        files: ['_/components/js/*.js'],
+        tasks: ['uglify']
+      },//script
+      html: {
+        files: ['*.html'],
+      },//html
+    },//watch
+  })//initconfig
 	grunt.registerTask('default', ['watch']);
-};
+}//exports
